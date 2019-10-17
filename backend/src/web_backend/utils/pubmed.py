@@ -1,9 +1,12 @@
-import attr
-import datetime
 from Bio import Entrez
 from Bio import Medline
 from collections import Counter
-from typing import Dict, List, Optional, Set
+from itertools import islice
+from pathlib import Path
+from typing import Callable, Dict, Iterable, List, Optional, Set
+import attr
+import datetime
+import os.path
 
 
 # Return list of pubmed ids for the query
@@ -47,7 +50,7 @@ def searchQueryStringForMeshTermIntersection(
         return f" AND ({first} [PDAT] : {second} [PDAT])"
 
     return (f"( {ored_terms(first_mesh_terms)} ) AND "
-            f"( f{ored_terms(second_mesh_terms)} ) + {date_term()}")
+            f"( {ored_terms(second_mesh_terms)} ) {date_term()}")
 
 
 def getPubMedIdsForMesh(first_mesh_terms: List[str],
@@ -114,7 +117,7 @@ def countGroupedIds(
     qualifiers, mapped to each group using the term_to_group
     dictionary Mesh terms with no group are not counted
     """
-    counts = Counter()
+    counts: Counter = Counter()
     for m_id in id_meshes:
         clean_terms = {removeQualifiers(term) for term in m_id.mesh_terms}
         groups = Counter({group for clean_term in clean_terms
@@ -124,12 +127,29 @@ def countGroupedIds(
     return counts
 
 
+MAX_AUTOCOMPLETIONS = 20
+
+
 class AutocompleteVocabulary:
-    def __init__(self):
-        pass
+    def __init__(self, words: Iterable[str]):
+        self._terms: List[str] = []
+        self.add_all(words)
 
     def autocomplete(self, text: str) -> List[str]:
-        return []
+        """Return the list of matches within this vocabulary"""
+        def matches(p: str) -> Callable[[str], bool]:
+
+            def m(term: str) -> bool:
+                return p in term
+
+            return m
+
+        return list(
+            islice(filter(matches(text), self._terms),
+                   MAX_AUTOCOMPLETIONS))
+
+    def add_all(self, terms: Iterable[str]) -> None:
+        self._terms.extend(terms)
 
 
 PRIMARY = 'primary'
@@ -137,4 +157,16 @@ SECONDARY = 'secondary'
 
 
 def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
-    return AutocompleteVocabulary()
+    """Load either PRIMARY or SECONDARY vocabulary into an
+    AutocompleteVocabulary"""
+
+    def after_tab_no_ws(s: str) -> str:
+        return s.partition('\t')[2].rstrip()
+
+    base_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+
+    fn = "d2020.nodes" if vocab_name == PRIMARY else "d2020.nodes"
+    path = base_dir / fn
+    with open(path) as f:
+        terms = map(after_tab_no_ws, f)
+        return AutocompleteVocabulary(terms)

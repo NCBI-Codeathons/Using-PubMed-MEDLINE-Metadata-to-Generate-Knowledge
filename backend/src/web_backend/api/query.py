@@ -21,7 +21,7 @@ secondary_vocab = loadVocabulary(SECONDARY)
 def query():
     first_mesh_terms = request.json.get('first_list')
 
-    print(first_mesh_terms)
+    # print(first_mesh_terms)
     second_mesh_terms = request.json.get('second_list')
     pubmed_ids = getPubMedIdsForMesh(
         first_mesh_terms, second_mesh_terms, 1000000)
