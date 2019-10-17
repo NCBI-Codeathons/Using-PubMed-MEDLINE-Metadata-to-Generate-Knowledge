@@ -3,10 +3,11 @@ from Bio import Medline
 from collections import Counter
 from itertools import islice
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Callable, Dict, Iterable, List, Optional, Set
 import attr
 import datetime
 import os.path
+
 
 # Return list of pubmed ids for the query
 def getPubMedIds(search_string: str, max_records: int):
@@ -116,7 +117,7 @@ def countGroupedIds(
     qualifiers, mapped to each group using the term_to_group
     dictionary Mesh terms with no group are not counted
     """
-    counts = Counter()
+    counts: Counter = Counter()
     for m_id in id_meshes:
         clean_terms = {removeQualifiers(term) for term in m_id.mesh_terms}
         groups = Counter({group for clean_term in clean_terms
@@ -128,9 +129,10 @@ def countGroupedIds(
 
 MAX_AUTOCOMPLETIONS = 20
 
+
 class AutocompleteVocabulary:
     def __init__(self, words: Iterable[str]):
-        self._terms = []
+        self._terms: List[str] = []
         self.add_all(words)
 
     def autocomplete(self, text: str) -> List[str]:
@@ -142,9 +144,11 @@ class AutocompleteVocabulary:
 
             return m
 
-        return islice(filter(matches(text), self._terms), MAX_AUTOCOMPLETIONS)
+        return list(
+            islice(filter(matches(text), self._terms),
+                   MAX_AUTOCOMPLETIONS))
 
-    def add_all(terms: Iterable[str]) -> None:
+    def add_all(self, terms: Iterable[str]) -> None:
         self._terms.extend(terms)
 
 
@@ -162,7 +166,7 @@ def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
     base_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
     fn = "d2020.nodes" if vocab_name == PRIMARY else "d2020.nodes"
-    fn = base_dir / fn
-    with open(fn) as f:
-        it = map(after_tab_no_rs, f)
-        return AutocompleteVocabulary(v)
+    path = base_dir / fn
+    with open(path) as f:
+        terms = map(after_tab_no_ws, f)
+        return AutocompleteVocabulary(terms)
