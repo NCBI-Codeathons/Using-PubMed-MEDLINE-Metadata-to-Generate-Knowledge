@@ -22,7 +22,7 @@ export default {
         chart: {
           type: "column",
           height: 400,
-          width: 400,
+          
           backgroundColor: 0,
           animation: false,
           spacing: [10, 20, 10, 10]

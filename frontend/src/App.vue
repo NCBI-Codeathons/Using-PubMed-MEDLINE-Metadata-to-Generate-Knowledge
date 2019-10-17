@@ -3,8 +3,9 @@
     <v-app-bar app elevation="1">
       <v-toolbar-title class="headline text-uppercase">
         <v-btn text to="/">
-          <span>NLM</span>
-          <span class="font-weight-light">meta</span>
+          <span class="font-weight-black">NLM</span>
+          <span class="font-weight-regular">Pub</span>
+          <span class="font-weight-light">Meta</span>
         </v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -18,7 +19,8 @@
     </v-content>
     <v-footer elevation="1">
       <v-container>
-        NLM Codethon
+        <p class="text-right">NLM Internal Codethon</p>
+        
       </v-container>
     </v-footer>
   </v-app>

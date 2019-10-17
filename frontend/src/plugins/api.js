@@ -5,7 +5,7 @@ import axios from "axios";
  * @param {*} first_list 
  * @param {*} second_list 
  */
-export default async function query(first_list, second_list) {
+export async function search(first_list, second_list) {
     try {
       const params = { first_list: first_list, second_list: second_list };
       
@@ -24,4 +24,18 @@ export default async function query(first_list, second_list) {
     } catch (err) {
       return {error: "something went wrong", details: JSON.stringify(err)}
     }
+}
+
+export async function suggestions(str, vocab) {
+  try {
+    const params = {
+
+    };
+    //const result = await axios.get("/api/autocomplete", params);
+
+  
+    return ["Measles", "Europe", "Russia"];
+  } catch (err) {
+    return [str];
+  }
 }
