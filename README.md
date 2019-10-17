@@ -37,3 +37,7 @@ jupyter-notebook
 - Support entry terms for search
 - Autocomplete
 - Support PMID list upload instead of search
+
+## Team
+- Kurtis Haro, PhD NLM/NCBI
+- 
