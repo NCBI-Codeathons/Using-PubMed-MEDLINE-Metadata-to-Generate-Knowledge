@@ -6,11 +6,11 @@ class TestCountGroupedIds(unittest.TestCase):
     @staticmethod
     def stub_term_bucket_mapping():
         return {
-            "Philadelphia": "Cities",
-            "Boston": "Cities",
-            "Finland": "Europe",
-            "Baltimore": "Cities",
-            "England": "Europe"}
+            "Philadelphia": {"Cities"},
+            "Boston": {"Cities"},
+            "Finland": {"Europe"},
+            "Baltimore": {"Cities"},
+            "England": {"Europe"}}
 
     @staticmethod
     def simple_input():
