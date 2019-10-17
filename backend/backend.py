@@ -106,7 +106,7 @@ def countGroupedIds(term_to_group: Dict[str, str],
     dictionary Mesh terms with no group are not counted
 
     """
-    counts = Counter()
+    counts: Counter = Counter()
     for m_id in id_meshes:
         clean_terms = {removeQualifiers(term) for term in m_id.mesh_terms}
         groups = Counter(
