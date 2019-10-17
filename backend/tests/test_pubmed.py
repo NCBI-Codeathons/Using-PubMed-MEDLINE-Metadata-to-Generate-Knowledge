@@ -31,3 +31,39 @@ class TestCountGroupedIds(unittest.TestCase):
             TestCountGroupedIds.stub_term_bucket_mapping(),
             TestCountGroupedIds.simple_input())
         self.assertEqual(actual, {'Cities': 2, 'Europe': 3})
+
+
+class TestAutocompleteVocabulary(unittest.TestCase):
+    def test_empty_words(self):
+        a = pubmed.AutocompleteVocabulary([])
+        self.assertEqual(a.autocomplete(""), [])
+        self.assertEqual(a.autocomplete("foo"), [])
+
+    def test_one_term(self):
+        a = pubmed.AutocompleteVocabulary(['my term'])
+        self.assertEqual(a.autocomplete(""), ['my term'])
+        self.assertEqual(a.autocomplete("m"), ['my term'])
+        self.assertEqual(a.autocomplete("M"), ['my term'])
+        self.assertEqual(a.autocomplete("my"), ['my term'])
+        self.assertEqual(a.autocomplete("foo"), [])
+
+    def test_two_terms(self):
+        a = pubmed.AutocompleteVocabulary(['my term', 'grubs'])
+        self.assertEqual(set(a.autocomplete("")), {'my term', 'grubs'})
+        self.assertEqual(set(a.autocomplete("m")), {'my term'})
+        self.assertEqual(set(a.autocomplete("my")), {'my term'})
+        self.assertEqual(set(a.autocomplete("mY")), {'my term'})
+        self.assertEqual(set(a.autocomplete("MY")), {'my term'})
+        self.assertEqual(set(a.autocomplete("foo")), set())
+        self.assertEqual(set(a.autocomplete("g")), {'grubs'})
+
+    def test_twentyfive_terms(self):
+        a = pubmed.AutocompleteVocabulary(map(str, range(25)))
+        self.assertEqual(
+            set(a.autocomplete("")),
+            { '0', '1', '10', '11', '12', '13', '14', '15', '16', '17',
+              '18', '19', '20', '21', '22', '23', '24', '2', '3', '4'
+            })
+        self.assertEqual(
+            set(a.autocomplete("1")),
+            {'1','10','11','12','13','14','15','16','17','18','19','21'})
