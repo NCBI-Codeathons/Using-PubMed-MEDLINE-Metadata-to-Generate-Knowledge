@@ -16,7 +16,7 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 6. The MeSH terms from the search corpus matching paramater two are counted for their frequency in the anchor search.
 7. The child nodes of the exploratoary parameter are displayed in a bar chart
 
-## How it works from a bird's eye view
+## Visually - What is PM2K Doing?
 ![alt text](/.images/analysis.png)
 
 ## How to use PM2K
