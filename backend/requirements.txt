@@ -1,0 +1,5 @@
+attrs
+biopython
+flake8
+pandas
+requests
