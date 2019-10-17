@@ -17,7 +17,8 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 7. The child nodes of the exploratoary parameter are displayed in a bar chart
 
 ## Visually - What is PM2K Doing?
-![alt text](/.images/analysis.png)
+![alt text](/.images/search-schema.png)
+> A user starts a search using a MeSH term of interest.  A corpus of citations is retrieved.  The number of those citations that intersect (match) the corpus are quantified and displayed in a chart.
 
 ## How to use PM2K
 Beta app can be found here: http://104.196.160.13/#/
@@ -34,10 +35,14 @@ conda install --file requirements.txt
 jupyter-notebook
 ```
 ## Forthcoming features
-- Support entry terms for search
 - Autocomplete
+- Support for Entry Terms & SCRs
 - Support PMID list upload instead of search
+- Time series analysis
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
-- 
+- Eric Moyer, PhD NLM/NCBI
+- Evgeny Ivanchenko, NLM/NCBI
+- Victor Joukov, NLM/NCBI
+- Preeti G. Kochar, PhD NLM/LO/BSD
