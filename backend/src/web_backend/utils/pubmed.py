@@ -1,8 +1,9 @@
 import attr
+import datetime
 from Bio import Entrez
 from Bio import Medline
 from collections import Counter
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 # Return list of pubmed ids for the query
@@ -19,7 +20,9 @@ def getPubMedIds(search_string: str, max_records: int):
 
 def searchQueryStringForMeshTermIntersection(
         first_mesh_terms: List[str],
-        second_mesh_terms: List[str]) -> str:
+        second_mesh_terms: List[str],
+        first_pub_date: Optional[datetime.date] = None,
+        last_pub_date: Optional[datetime.date] = None) -> str:
     """Return the query string that would be used to search documents
     containing any of the first mesh terms and any of the second mesh
     terms"""
@@ -30,9 +33,21 @@ def searchQueryStringForMeshTermIntersection(
     def ored_terms(all_terms: List[str]) -> str:
         return " OR ".join(append_mh(all_terms))
 
-    ored1 = ored_terms(first_mesh_terms)
-    ored2 = ored_terms(second_mesh_terms)
-    return "(" + ored1 + ") AND (" + ored2 + ")"
+    def entrez_date_str(
+            the_date: Optional[datetime.date],
+            default: str) -> str:
+        if the_date is None:
+            return default
+        else:
+            return f"{the_date.year:04}/{the_date.month:02}/{the_date.day:02}"
+
+    def date_term() -> str:
+        first = entrez_date_str(first_pub_date, "0001/01/01")
+        second = entrez_date_str(first_pub_date, "8166/12/31")
+        return f" AND ({first} [PDAT] : {second} [PDAT])"
+
+    return (f"( {ored_terms(first_mesh_terms)} ) AND "
+            f"( f{ored_terms(second_mesh_terms)} ) + {date_term()}")
 
 
 def getPubMedIdsForMesh(first_mesh_terms: List[str],
