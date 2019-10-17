@@ -5,6 +5,7 @@
      chips
      small-chips
      multiple
+     auto-select-first
      v-model="select"
      :loading="loading"
      :items="items"
@@ -23,29 +24,37 @@ export default {
     vocab: String
   },
   async created() {
-    this.items = await suggestions("", this.vocab);
+    console.log(this.vocab, "Created!", this.value);
+    const res = await suggestions("", this.vocab);
+    this.items = this.value;
+    this.items = this.items.concat(res);
   },
   data: function() {
      return {
       loading: false,
-      items: [],
-      select: [],
+      items: this.value,
+      select: this.value,
       search: null
      }
   },
   watch: {
     select(val) {
+      console.log(this.vocab, "Select!");
       this.$emit('input', val);
     },
     search(val) {
+      console.log(this.vocab, "Search!");
       val && val != this.select && this.lookUp(val)
     }
   },
   methods: {
     async lookUp(val) {
       this.loading = true;
-      this.items = await suggestions(val, this.vocab);
+      const res = await suggestions(val, this.vocab);
+      this.items = this.value;
+      this.items = this.items.concat(res);
       this.loading = false;
+      console.log(this.vocab, "Lookup end!");
     }
   }
 }
