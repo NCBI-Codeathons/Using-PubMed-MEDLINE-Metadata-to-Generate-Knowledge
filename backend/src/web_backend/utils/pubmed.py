@@ -5,8 +5,6 @@ from Bio import Medline
 from collections import Counter
 from typing import Dict, List, Optional, Set
 
-from mesh import descendantsAndBucketsForTerms
-
 
 # Return list of pubmed ids for the query
 def getPubMedIds(search_string: str, max_records: int):
@@ -103,16 +101,6 @@ def addMeshTermsToIds(pubmed_ids: List[str]) -> List[MeshAndId]:
         if len(mesh_chunk) < 10000:
             break
     return result
-
-
-def descendantsAndBucketsForTerms_stub(mesh_terms: List[str]) -> Dict[str, str]:
-    # Stub
-    return \
-        {"Philadelphia": {"Cities"},
-         "Boston": {"Cities"},
-         "Finland": {"Europe"},
-         "Baltimore": {"Cities"},
-         "England": {"Europe"}}
 
 
 def removeQualifiers(mesh_term: str) -> str:
