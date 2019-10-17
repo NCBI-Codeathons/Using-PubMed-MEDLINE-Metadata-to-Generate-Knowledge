@@ -1,10 +1,12 @@
-import attr
-import datetime
 from Bio import Entrez
 from Bio import Medline
 from collections import Counter
+from itertools import islice
+from pathlib import Path
 from typing import Dict, List, Optional, Set
-
+import attr
+import datetime
+import os.path
 
 # Return list of pubmed ids for the query
 def getPubMedIds(search_string: str, max_records: int):
@@ -124,12 +126,26 @@ def countGroupedIds(
     return counts
 
 
+MAX_AUTOCOMPLETIONS = 20
+
 class AutocompleteVocabulary:
-    def __init__(self):
-        pass
+    def __init__(self, words: Iterable[str]):
+        self._terms = []
+        self.add_all(words)
 
     def autocomplete(self, text: str) -> List[str]:
-        return []
+        """Return the list of matches within this vocabulary"""
+        def matches(p: str) -> Callable[[str], bool]:
+
+            def m(term: str) -> bool:
+                return p in term
+
+            return m
+
+        return islice(filter(matches(text), self._terms), MAX_AUTOCOMPLETIONS)
+
+    def add_all(terms: Iterable[str]) -> None:
+        self._terms.extend(terms)
 
 
 PRIMARY = 'primary'
@@ -137,4 +153,16 @@ SECONDARY = 'secondary'
 
 
 def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
-    return AutocompleteVocabulary()
+    """Load either PRIMARY or SECONDARY vocabulary into an
+    AutocompleteVocabulary"""
+
+    def after_tab_no_ws(s: str) -> str:
+        return s.partition('\t')[2].rstrip()
+
+    base_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+
+    fn = "d2020.nodes" if vocab_name == PRIMARY else "d2020.nodes"
+    fn = base_dir / fn
+    with open(fn) as f:
+        it = map(after_tab_no_rs, f)
+        return AutocompleteVocabulary(v)

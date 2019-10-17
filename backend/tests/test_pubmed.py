@@ -1,4 +1,4 @@
-import backend
+import web_backend.utils.pubmed as pubmed
 import unittest
 
 
@@ -15,7 +15,7 @@ class TestCountGroupedIds(unittest.TestCase):
     @staticmethod
     def simple_input():
         # Should give Cities: 2 and Europe: 3
-        MID = backend.MeshAndId
+        MID = pubmed.MeshAndId
         return (
             [
                 MID(1, ["Philadelphia"]),
@@ -27,7 +27,7 @@ class TestCountGroupedIds(unittest.TestCase):
             ])
 
     def test_CountGroupedIdsForSimpleInput(self):
-        actual = backend.countGroupedIds(
+        actual = pubmed.countGroupedIds(
             TestCountGroupedIds.stub_term_bucket_mapping(),
             TestCountGroupedIds.simple_input())
         self.assertEqual(actual, {'Cities': 2, 'Europe': 3})
