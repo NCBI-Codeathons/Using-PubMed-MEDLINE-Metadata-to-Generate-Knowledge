@@ -122,3 +122,19 @@ def countGroupedIds(
                           for group in term_to_groups[clean_term]})
         counts.update(groups)
     return counts
+
+
+class AutocompleteVocabulary:
+    def __init__(self):
+        pass
+
+    def autocomplete(self, text: str) -> List[str]:
+        return []
+
+
+PRIMARY = 'primary'
+SECONDARY = 'secondary'
+
+
+def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
+    return AutocompleteVocabulary()
