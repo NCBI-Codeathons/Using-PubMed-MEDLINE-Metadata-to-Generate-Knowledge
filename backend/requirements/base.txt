@@ -1,4 +1,6 @@
 Flask
 gunicorn
 requests
-redis
+attrs
+biopython
+pandas
