@@ -1,13 +1,14 @@
 from flask import Flask, render_template
 import os
-
+from web_backend.api.query import api
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
 app = Flask(__name__,
             static_folder=os.path.join(base_dir, "front/static"),
             template_folder=os.path.join("./front"))
 
-# app.register_blueprint(api,  url_prefix='/api')
+
+app.register_blueprint(api,  url_prefix='/api')
 
 
 @app.route('/', defaults={'path': ''})
