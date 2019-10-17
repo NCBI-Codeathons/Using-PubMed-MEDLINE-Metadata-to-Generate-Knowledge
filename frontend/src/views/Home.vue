@@ -81,19 +81,18 @@ export default {
       this.loading = true;
       
       const result = await search(this.primary, this.refinment);
+      
+      this.disabled = !(this.checkValid(this.primary) && this.checkValid(this.refinment));
+      this.loading = false;
 
       if ('error' in result) {
         this.loaded = false;
-        this.disabled = false;
-        this.loading = false;
         alert(result.error);
         return;
       }
       this.categories = result.categories;
       this.counts = result.counts;
       this.loaded = true;
-      this.disabled = false;
-      this.loading = false;
     }
    }
 }
