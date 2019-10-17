@@ -34,10 +34,13 @@ conda install --file requirements.txt
 jupyter-notebook
 ```
 ## Forthcoming features
-- Support entry terms for search
 - Autocomplete
+- Support for Entry Terms & SCRs
 - Support PMID list upload instead of search
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
-- 
+- Eric Moyer, PhD NLM/NCBI
+- Evgeny Ivanchenko, NLM/NCBI
+- Victor Joukov, NLM/NCBI
+- Preeti G. Kochar, PhD NLM/LO/BSD
