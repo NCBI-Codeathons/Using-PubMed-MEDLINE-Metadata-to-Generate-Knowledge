@@ -47,7 +47,7 @@ def searchQueryStringForMeshTermIntersection(
         return f" AND ({first} [PDAT] : {second} [PDAT])"
 
     return (f"( {ored_terms(first_mesh_terms)} ) AND "
-            f"( f{ored_terms(second_mesh_terms)} ) + {date_term()}")
+            f"( {ored_terms(second_mesh_terms)} ) {date_term()}")
 
 
 def getPubMedIdsForMesh(first_mesh_terms: List[str],
