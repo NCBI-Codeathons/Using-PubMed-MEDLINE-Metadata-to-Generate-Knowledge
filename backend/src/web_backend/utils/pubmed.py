@@ -3,7 +3,7 @@ import datetime
 from Bio import Entrez
 from Bio import Medline
 from collections import Counter
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 
 # Return list of pubmed ids for the query
@@ -52,14 +52,14 @@ def searchQueryStringForMeshTermIntersection(
 
 def getPubMedIdsForMesh(first_mesh_terms: List[str],
                         second_mesh_terms: List[str],
+                        max_records: int,
                         first_pub_date: Optional[datetime.date] = None,
-                        last_pub_date: Optional[datetime.date] = None
-                        max_records: int):
+                        last_pub_date: Optional[datetime.date] = None):
     """Return the pubmed ids that contain any of the first mesh terms and
     any of the second mesh terms"""
     return getPubMedIds(
-      searchQueryStringForMeshTermIntersection(
-        first_mesh_terms, second_mesh_terms),
+        searchQueryStringForMeshTermIntersection(
+            first_mesh_terms, second_mesh_terms),
         first_pub_date, last_pub_date, max_records)
 
 
@@ -106,29 +106,29 @@ def addMeshTermsToIds(pubmed_ids: List[str]) -> List[MeshAndId]:
 def descendantsAndBucketsForTerms(mesh_terms: List[str]) -> Dict[str, str]:
     # Stub
     return \
-        {"Philadelphia": "Cities",
-         "Boston": "Cities",
-         "Finland": "Europe",
-         "Baltimore": "Cities",
-         "England": "Europe"}
+        {"Philadelphia": {"Cities"},
+         "Boston": {"Cities"},
+         "Finland": {"Europe"},
+         "Baltimore": {"Cities"},
+         "England": {"Europe"}}
 
 
 def removeQualifiers(mesh_term: str) -> str:
     return mesh_term.split("/")[0].replace("*", "")
 
 
-def countGroupedIds(term_to_group: Dict[str, str],
-                    id_meshes: List[MeshAndId]) -> Dict[str, int]:
+def countGroupedIds(
+        term_to_groups: Dict[str, Set[str]],
+        id_meshes: List[MeshAndId]) -> Dict[str, int]:
     """Return number of ids that had a mesh term that, after removing
     qualifiers, mapped to each group using the term_to_group
     dictionary Mesh terms with no group are not counted
-
     """
-    counts: Counter = Counter()
+    counts = Counter()
     for m_id in id_meshes:
         clean_terms = {removeQualifiers(term) for term in m_id.mesh_terms}
-        groups = Counter(
-          {term_to_group[clean_term] for clean_term in clean_terms
-           if clean_term in term_to_group})
+        groups = Counter({group for clean_term in clean_terms
+                          if clean_term in term_to_groups
+                          for group in term_to_groups[clean_term]})
         counts.update(groups)
-    return dict(counts)
+    return counts
