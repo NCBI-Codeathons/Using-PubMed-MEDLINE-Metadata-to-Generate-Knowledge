@@ -59,8 +59,8 @@ def getPubMedIdsForMesh(first_mesh_terms: List[str],
     any of the second mesh terms"""
     return getPubMedIds(
         searchQueryStringForMeshTermIntersection(
-            first_mesh_terms, second_mesh_terms),
-        first_pub_date, last_pub_date, max_records)
+            first_mesh_terms, second_mesh_terms,
+            first_pub_date, last_pub_date), max_records)
 
 
 @attr.s
