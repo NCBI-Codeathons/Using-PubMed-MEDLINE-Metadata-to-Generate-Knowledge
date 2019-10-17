@@ -23,6 +23,5 @@ For exploratory and developmental work, we have provided a PM2K dev notebook.  U
 `conda create --name py36 python=3.6`
 
 `conda env create --file requirements.txt`
-
 `jupyter-notebook`
 
