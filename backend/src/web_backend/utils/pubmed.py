@@ -138,9 +138,10 @@ class AutocompleteVocabulary:
     def autocomplete(self, text: str) -> List[str]:
         """Return the list of matches within this vocabulary"""
         def matches(p: str) -> Callable[[str], bool]:
+            p_lower = p.lower()
 
             def m(term: str) -> bool:
-                return p in term
+                return p_lower in term.lower()
 
             return m
 
@@ -149,7 +150,7 @@ class AutocompleteVocabulary:
                    MAX_AUTOCOMPLETIONS))
 
     def add_all(self, terms: Iterable[str]) -> None:
-        self._terms.extend(terms)
+        self._terms.extend(sorted(set(terms)))
 
 
 PRIMARY = 'primary'
