@@ -8,7 +8,8 @@ descendantDict = {}
 # MN -> MH
 nodesDict = {}
 
-DECL_PREFIX = "d2020"
+base_dir = os.path.dirname(os.path.realpath(__file__))
+DECL_PREFIX = base_dir + "/d2020"
 
 def getDescendants(term: str, level, cumulative=True):
     all_descendants = []

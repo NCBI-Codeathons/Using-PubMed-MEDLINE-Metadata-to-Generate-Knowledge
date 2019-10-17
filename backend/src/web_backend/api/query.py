@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 from web_backend.utils.mesh import descendantsAndBucketsForTerms
 
 from web_backend.utils.pubmed import getPubMedIdsForMesh, addMeshTermsToIds, \
-    descendantsAndBucketsForTerms, countGroupedIds, loadVocabulary, PRIMARY, \
+    countGroupedIds, loadVocabulary, PRIMARY, \
     SECONDARY
 
 
