@@ -1,6 +1,5 @@
 import backend
 import unittest
-from collections import Counter
 
 
 class TestCountGroupedIds(unittest.TestCase):
@@ -19,12 +18,12 @@ class TestCountGroupedIds(unittest.TestCase):
         MID = backend.MeshAndId
         return (
             [
-                MID(1,["Philadelphia"])
-                , MID(2,["Georgia"])
-                , MID(3,["Boston", "Finland"])
-                , MID(3,["England", "Finland"])
-                , MID(3,["England", "Europe"])
-                , MID(3,["Europe"])
+                MID(1, ["Philadelphia"]),
+                MID(2, ["Georgia"]),
+                MID(3, ["Boston", "Finland"]),
+                MID(3, ["England", "Finland"]),
+                MID(3, ["England", "Europe"]),
+                MID(3, ["Europe"]),
             ])
 
     def test_CountGroupedIdsForSimpleInput(self):
