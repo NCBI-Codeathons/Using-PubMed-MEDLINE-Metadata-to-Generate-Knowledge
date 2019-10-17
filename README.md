@@ -37,6 +37,7 @@ jupyter-notebook
 - Autocomplete
 - Support for Entry Terms & SCRs
 - Support PMID list upload instead of search
+- Time series analysis
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
