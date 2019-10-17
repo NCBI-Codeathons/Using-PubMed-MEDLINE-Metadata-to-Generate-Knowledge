@@ -52,12 +52,15 @@ def searchQueryStringForMeshTermIntersection(
 
 def getPubMedIdsForMesh(first_mesh_terms: List[str],
                         second_mesh_terms: List[str],
+                        first_pub_date: Optional[datetime.date] = None,
+                        last_pub_date: Optional[datetime.date] = None
                         max_records: int):
     """Return the pubmed ids that contain any of the first mesh terms and
     any of the second mesh terms"""
     return getPubMedIds(
       searchQueryStringForMeshTermIntersection(
-        first_mesh_terms, second_mesh_terms), max_records)
+        first_mesh_terms, second_mesh_terms),
+        first_pub_date, last_pub_date, max_records)
 
 
 @attr.s
