@@ -29,12 +29,13 @@ export async function search(first_list, second_list) {
 export async function suggestions(str, vocab) {
   try {
     const params = {
-
+      vocab: vocab,
+      text_so_far: str
     };
-    //const result = await axios.get("/api/autocomplete", params);
-
+    const result = await axios.get("/api/autocomplete", {params});
+    
   
-    return ["Measles", "Europe", "Russia"];
+    return result.data;
   } catch (err) {
     return [str];
   }

@@ -76,8 +76,7 @@ export default {
       return Array.isArray(val) && ( val.length != 0 );
     },
     async query() {
-      this.loaded = false;
-      this.disabled = true;
+
       this.loading = true;
       
       const result = await search(this.primary, this.refinment);
