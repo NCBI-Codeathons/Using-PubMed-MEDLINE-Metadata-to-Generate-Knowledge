@@ -5,7 +5,7 @@ For example, suppose I wanted to know "the where" of publications about about Zi
 **PLEASE NOTE**: PubMed citations are not immediately indexed with MeSH terms, so the latest abstracts will not be included in your analysis.
 
 ## What is MeSH?
-From the National Library of Medicine website: "The Medical Subject Headings (MeSH) thesaurus is a controlled and hierarchically-organized vocabulary produced by the National Library of Medicine. It is used for indexing, cataloging, and searching of biomedical and health-related information." There are plenty of resources for understanding and leveraging MeSH from the [dedicated NLM page](https://www.nlm.nih.gov/mesh/meshhome.html)
+From the National Library of Medicine website: "The Medical Subject Headings (MeSH) thesaurus is a controlled and hierarchically-organized vocabulary produced by the National Library of Medicine. It is used for indexing, cataloging, and searching of biomedical and health-related information." There are plenty of resources for understanding and leveraging MeSH from the [dedicated NLM page](https://www.nlm.nih.gov/mesh/meshhome.html).  The file used in this application is the RDF found on the [MeSH Downloads page](https://www.nlm.nih.gov/databases/download/mesh.html) (downloaded 2019-10-16).
 
 ## Basic Workflow
 1. User supplies two MeSH-based input parameters, the first is the "anchor" search, the second is the "exploratory" parameter.
