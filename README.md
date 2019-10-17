@@ -20,8 +20,7 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 ### Using Locally
 For exploratory and developmental work, we have provided a PM2K dev notebook.  Use it, use a Python 3.6 virtual environment (or use a conda installation) and install the requirements.txt file
 
-`conda create --name py36 python=3.6`
-
-`conda env create --file requirements.txt`
-`jupyter-notebook`
+```conda create --name py36 python=3.6
+conda env create --file requirements.txt
+jupyter-notebook```
 
