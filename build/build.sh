@@ -25,6 +25,8 @@ echo "Create dist"
     cp ./build/Dockerfile ./dist/
     cp ./build/gunicorn.config ./dist/
     cp ./backend/dist/web_backend-0.0.tar.gz ./dist
+    cp ./build/keys.env ./dist
+    cp ./build/run_server.sh ./dist
 )
 
 echo "Deploy..."
