@@ -1,4 +1,5 @@
 import web_backend.utils.pubmed as pubmed
+from io import StringIO
 import unittest
 
 
@@ -71,3 +72,33 @@ class TestAutocompleteVocabulary(unittest.TestCase):
     def test_loadVocabulary(self):
         a = pubmed.loadVocabulary(pubmed.PRIMARY)
         self.assertEqual(set(a.autocomplete("marfan")), {"Marfan Syndrome"})
+
+    def test_headingsFileTerms_empty(self):
+        t = list(pubmed.headingsFileTerms(StringIO("")))
+        self.assertEqual(t, [])
+
+    def test_headingsFileTerms_one(self):
+        t = list(pubmed.headingsFileTerms(StringIO("123.45\tA term")))
+        self.assertEqual(t, ['A term'])
+
+    def test_headingsFileTerms_two(self):
+        t = list(pubmed.headingsFileTerms(StringIO("123.45\tA term\n67\tOther")))
+        self.assertEqual(t, ['A term', 'Other'])
+
+    def test_synonymsFileTerms_empty(self):
+        t = list(pubmed.synonymsFileTerms(StringIO("")))
+        self.assertEqual(t, [])
+
+    def test_synonymsFileTerms_one_line_one_syn(self):
+        t = list(pubmed.synonymsFileTerms(StringIO("123.45\tA syn")))
+        self.assertEqual(t, ['A syn'])
+
+    def test_synonymsFileTerms_one_line_two_syn(self):
+        t = list(pubmed.synonymsFileTerms(StringIO(
+            "123.45\tA syn\tSecond syn")))
+        self.assertEqual(t, ['A syn', 'Second syn'])
+
+    def test_synonymsFileTerms_two_lines_three_syn(self):
+        t = list(pubmed.synonymsFileTerms(StringIO(
+            "123.45\tA syn\n67\tOther\tfoo")))
+        self.assertEqual(t, ['A syn', 'Other', 'foo'])
