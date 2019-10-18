@@ -215,6 +215,11 @@ def synonymsFileTerms(f: IO[str]) -> Iterable[str]:
         map(split_synonyms, map(after_1st_tab_no_ws, f)))
 
 
+def scrFileTerms(f: IO[str]) -> Iterable[str]:
+    '''Return terms from SCR file'''
+    return [line.rstrip() for line in f]
+
+
 def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
     """Load either PRIMARY or SECONDARY vocabulary into an
     AutocompleteVocabulary"""
@@ -226,5 +231,9 @@ def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
 
     with open(base_dir / "mesh2020.synonyms") as f:
         vocab.add_all(synonymsFileTerms(f))
+
+    if vocab_name == PRIMARY:
+        with open(base_dir / "mesh2020.scr") as f:
+            vocab.add_all(scrFileTerms(f))
 
     return vocab
