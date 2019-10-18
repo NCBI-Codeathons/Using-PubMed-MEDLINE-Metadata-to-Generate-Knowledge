@@ -23,6 +23,8 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 ## How to use PM2K
 The beta web app can be found here: http://pubmeta.us/#/
 
+Using PM2K is really straightforward; enter your "anchor" search MeSH terms in box one, and select the MeSH term of interest in box two you would like to compare/analyze against.  Below is an example analysis and output:
+
 ![alt text](/.images/example.png)
 > This figures illustrates the output for the example proposed above, displaying the regions tagged on the publications that were about Zika Virus.
 
