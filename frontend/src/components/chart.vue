@@ -6,10 +6,7 @@
 import {Chart} from 'highcharts-vue'
 export default {
   props: [
-    'primary',
-    'refinment',
-    'categories',
-    'counts'
+    'config'
   ],
   components: {
       Chart
@@ -20,15 +17,21 @@ export default {
     }
   },
   watch: {
-    categories(val) {
-      this.options = this.build();
-    },
-    counts(val) {
+    config(val) {
       this.options = this.build();
     }
   },
   methods: {
     build() {
+
+
+      const counts = [];
+      const categories = [];
+      for (const [cat, count] of Object.entries(this.config.data)) {
+        counts.push([parseInt(count)]);
+        categories.push([cat]);
+      }
+
       return {
         credits: {
           enabled: false // Remove watermark.
@@ -42,30 +45,42 @@ export default {
           spacing: [50, 20, 20, 20]
         },
         title: {
-          text: this.primary.join("; ")
+          text: this.config.primary.join("; ")
         },
         legend:{
           enabled: false
         },
         xAxis: {
-          categories: this.categories,
+          categories: categories,
           title: {
-            text: this.refinment.join('; ')
+            text: this.config.refinment.join('; ')
           }
         },
         yAxis: {
             min: 0,
             title: {
                 text: 'Number of publications',
-                // align: 'high'
             },
             labels: {
                 overflow: 'justify'
             }
         },
+        plotOptions: {
+          series: {
+              cursor: 'pointer',
+              point: {
+                  events: {
+                      click: function () {
+                          window.open('http://stackoverflow.com', '_blank');
+                          //alert('Category: ' + this.category + ', value: ' + this.y);
+                      }
+                  }
+              }
+          }
+        },
         series: [{
           name: 'Test',
-          data: this.counts,
+          data: counts,
           animation: false,
           color: '#1E88E5'
         }]
