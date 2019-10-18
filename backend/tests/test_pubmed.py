@@ -69,9 +69,16 @@ class TestAutocompleteVocabulary(unittest.TestCase):
             set(a.autocomplete("1")),
             {'1','10','11','12','13','14','15','16','17','18','19','21'})
 
-    def test_loadVocabulary(self):
+    def test_loadVocabulary_primary(self):
         a = pubmed.loadVocabulary(pubmed.PRIMARY)
-        self.assertEqual(set(a.autocomplete("marfan")), {"Marfan Syndrome"})
+        self.assertEqual(set(a.autocomplete("marfan")), {
+            "Marfan Syndrome",
+            "Marfans Syndrome",
+            "Marfan's Syndrome",
+            "Marfan Syndrome, Type I",
+            "Marfanil"
+        })
+
 
     def test_headingsFileTerms_empty(self):
         t = list(pubmed.headingsFileTerms(StringIO("")))
