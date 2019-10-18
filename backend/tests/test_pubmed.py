@@ -48,7 +48,7 @@ class TestAddPubMedSearchUrls(unittest.TestCase):
                     "pub_med": 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
                     '%28+Marfan+Syndrome+%5BMH%5D++%29+AND+%28+Europe+%5BMH%5D'
                     '++%29++AND+%281919%2F02%2F13+%5BPDAT%5D+'
-                    '%3A+g2019%2F04%2F15+%5BPDAT%5D%29'}})
+                    '%3A+2019%2F04%2F15+%5BPDAT%5D%29'}})
 
 
 class TestAutocompleteVocabulary(unittest.TestCase):
@@ -101,7 +101,23 @@ class TestAutocompleteVocabulary(unittest.TestCase):
             "Marfans Syndrome",
             "Marfan's Syndrome",
             "Marfan Syndrome, Type I",
-            "Marfanil"
+            "Marfanil",
+            'Marfanoid Habitus and Specific Language and Learning Disabilities',
+            'Marfanoid-Craniosynostosis Syndrome',
+            'Marfanoid craniosynostosis syndrome',
+            'Marfanoid Disorder With Craniosynostosis, Type I',
+            'Marfan like connective tissue disorder',
+            'fibrillin 1 (Marfan syndrome) protein, human',
+            'XLMR with Marfanoid Features',
+            'Neonatal Cutis Laxa With Marfanoid Phenotype',
+            'Marfanoid disorder with craniosynostosis, type 2',
+            'Marfan syndrome type 1',
+            'X-Linked Mental Retardation with Marfanoid Habitus',
+            'Marfanoid habitus, mild general hypotonia, hypernasal voice, '
+            'normal testicular size, and distinct craniofacial anomalies',
+            'Mental retardation, X-linked, with marfanoid habitus',
+            'X-Linked Intellectual Deficit with Marfanoid Habitus',
+            'Craniosynostosis and Marfanoid disorder, type 1'
         })
 
     def test_headingsFileTerms_empty(self):
