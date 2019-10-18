@@ -151,7 +151,8 @@ class AutocompleteVocabulary:
                    MAX_AUTOCOMPLETIONS))
 
     def add_all(self, terms: Iterable[str]) -> None:
-        self._terms.extend(sorted(set(terms)))
+        self._terms.extend(set(terms))
+        self._terms.sort()
 
 
 PRIMARY = 'primary'
