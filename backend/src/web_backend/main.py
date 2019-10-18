@@ -27,9 +27,9 @@ def health():
 @app.before_first_request
 def startup():
     print ("Starting service!")
-    Entrez.email = cfg.MAIL
-    Entrez.api_key = cfg.KEY
-    Entrez.tool = cfg.TOOL
+    Entrez.email = cfg.mail()
+    Entrez.api_key = cfg.key()
+    Entrez.tool = cfg.tool()
     print("Started!")
 
 # This is only used when running locally. When running live, gunicorn runs

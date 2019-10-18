@@ -1,5 +1,10 @@
 import os
 
-TOOL = os.environ['CFG_TOOL']
-MAIL = os.environ['CFG_MAIL']
-KEY = os.environ['CFG_KEY']
+def tool():
+    return os.environ['CFG_TOOL']
+
+def mail():
+    return os.environ['CFG_MAIL']
+
+def key():
+    return os.environ['CFG_KEY']
