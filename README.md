@@ -28,13 +28,13 @@ The beta web app can be found here: http://104.196.160.13/#/
 
 ## Additional Features
 - The MeSH terms can be found with autocomplete after the user begins to type
-
-## Forthcoming features
 - Support for Entry Terms & SCRs
 - Add search terms to figures
+- Time series analysis
+
+## Forthcoming features
 - Support for publication type (PT) search
 - Support PMID list upload instead of search
-- Time series analysis
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
