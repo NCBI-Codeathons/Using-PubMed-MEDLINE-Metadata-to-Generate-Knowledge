@@ -46,7 +46,7 @@ def searchQueryStringForMeshTermIntersection(
 
     def date_term() -> str:
         first = entrez_date_str(first_pub_date, "0001/01/01")
-        second = entrez_date_str(first_pub_date, "8166/12/31")
+        second = entrez_date_str(last_pub_date, "8166/12/31")
         return f" AND ({first} [PDAT] : {second} [PDAT])"
 
     return (f"( {ored_terms(first_mesh_terms)} ) AND "

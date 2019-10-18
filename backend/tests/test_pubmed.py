@@ -1,6 +1,7 @@
-import web_backend.utils.pubmed as pubmed
+from datetime import date
 from io import StringIO
 import unittest
+import web_backend.utils.pubmed as pubmed
 
 
 class TestCountGroupedIds(unittest.TestCase):
@@ -32,6 +33,22 @@ class TestCountGroupedIds(unittest.TestCase):
             TestCountGroupedIds.stub_term_bucket_mapping(),
             TestCountGroupedIds.simple_input())
         self.assertEqual(actual, {'Cities': 2, 'Europe': 3})
+
+
+class TestAddPubMedSearchUrls(unittest.TestCase):
+    def test_Marfan(self):
+        self.maxDiff = None
+        d = pubmed.addPubMedSearchUrls(
+            ["Marfan Syndrome"], {"Europe": 124},
+            date(1919, 2, 13), date(2019, 4, 15))
+        self.assertEqual(
+            d, {
+                "Europe": {
+                    "count": 124,
+                    "pub_med": 'https://www.ncbi.nlm.nih.gov/pubmed/?term='
+                    '%28+Marfan+Syndrome+%5BMH%5D++%29+AND+%28+Europe+%5BMH%5D'
+                    '++%29++AND+%281919%2F02%2F13+%5BPDAT%5D+'
+                    '%3A+g2019%2F04%2F15+%5BPDAT%5D%29'}})
 
 
 class TestAutocompleteVocabulary(unittest.TestCase):
