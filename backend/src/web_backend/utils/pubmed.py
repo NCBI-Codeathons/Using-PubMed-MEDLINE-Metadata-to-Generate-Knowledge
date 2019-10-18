@@ -180,11 +180,11 @@ def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
 
     base_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
-    with open(base_dir / "d2020.nodes") as f:
+    with open(base_dir / "mesh2020.nodes") as f:
         vocab = AutocompleteVocabulary(headingsFileTerms(f))
 
     if vocab_name == PRIMARY:
-        with open(base_dir / "d2020.synonyms") as f:
+        with open(base_dir / "mesh2020.synonyms") as f:
             vocab.add_all(synonymsFileTerms(f))
 
     return vocab
