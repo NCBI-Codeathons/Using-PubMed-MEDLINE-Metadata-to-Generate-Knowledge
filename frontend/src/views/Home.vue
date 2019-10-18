@@ -10,7 +10,7 @@
           <v-row dense>
             <v-col dense>
               <Terms v-model="primary" vocab="primary" label="Primary search terms"/>
-              <Terms v-model="refinment" vocab="refinment" label="Refinment search terms" />
+              <Terms v-model="refinment" vocab="refinment" label="Refinement search terms" />
               <v-btn :disabled="disabled" block color="blue darken-1" light v-on:click="query">Enlighten me!</v-btn>
             </v-col>
           </v-row>
