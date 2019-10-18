@@ -183,8 +183,7 @@ def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
     with open(base_dir / "mesh2020.nodes") as f:
         vocab = AutocompleteVocabulary(headingsFileTerms(f))
 
-    if vocab_name == PRIMARY:
-        with open(base_dir / "mesh2020.synonyms") as f:
-            vocab.add_all(synonymsFileTerms(f))
+    with open(base_dir / "mesh2020.synonyms") as f:
+        vocab.add_all(synonymsFileTerms(f))
 
     return vocab
