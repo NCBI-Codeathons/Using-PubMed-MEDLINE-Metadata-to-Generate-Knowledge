@@ -43,6 +43,6 @@ jupyter-notebook
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
 - Eric Moyer, PhD NLM/NCBI
-- Evgeny Ivanchenko, NLM/NCBI
+- Evgeny Ivanchenko, PhD NLM/NCBI
 - Victor Joukov, NLM/NCBI
 - Preeti G. Kochar, PhD NLM/LO/BSD

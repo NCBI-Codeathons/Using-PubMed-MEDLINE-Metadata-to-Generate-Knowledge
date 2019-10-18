@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options"></chart>
+  <Chart :options="options" />
 </template>
 
 <script>
@@ -13,9 +13,21 @@ export default {
       Chart
   },
   data: function() {
-    const data = this.msg;
     return {
-      options: {
+      options: this.build()
+    }
+  },
+  watch: {
+    categories(val) {
+      this.options = this.build();
+    },
+    counts(val) {
+      this.options = this.build();
+    }
+  },
+  methods: {
+    build() {
+      return {
         credits: {
           enabled: false // Remove watermark.
         },
@@ -25,7 +37,7 @@ export default {
           
           backgroundColor: 0,
           animation: false,
-          spacing: [10, 20, 10, 10]
+          spacing: [50, 20, 20, 20]
         },
         title: null,
         legend:{
@@ -49,11 +61,11 @@ export default {
           name: 'Test',
           data: this.counts,
           animation: false,
-          color: '#24A'
+          color: '#1E88E5'
         }]
       }
     }
-  },
+  }
 }
 </script>
 

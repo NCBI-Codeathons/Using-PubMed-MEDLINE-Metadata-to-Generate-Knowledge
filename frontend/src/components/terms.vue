@@ -1,15 +1,16 @@
 <template>
-  <v-row>
     <v-autocomplete
+     outlined
      dense
      chips
-     small-chips
      multiple
+     deletable-chips
+     auto-select-first
      v-model="select"
+     :label="label"
      :loading="loading"
      :items="items"
      :search-input.sync="search"/>
-  </v-row>
 </template>
 
 <script>
@@ -20,31 +21,47 @@ export default {
   },
   props: {
     value: Array,
-    vocab: String
+    vocab: String,
+    label: String
   },
   async created() {
-    this.items = await suggestions("", this.vocab);
+    const res = await suggestions("", this.vocab);
+    this.items = this.value;
+    this.items = this.unique(this.items.concat(res));
   },
   data: function() {
      return {
       loading: false,
-      items: [],
-      select: [],
-      search: null
+      items: this.value,
+      select: this.value,
+      search: null,
+      timerId: null,
      }
   },
   watch: {
     select(val) {
       this.$emit('input', val);
+      this.search = "";
     },
     search(val) {
       val && val != this.select && this.lookUp(val)
     }
   },
   methods: {
-    async lookUp(val) {
+    unique (a) {
+     return Array.from(new Set(a));
+    },
+    lookUp(val) {
+      clearTimeout(this.timerId);
+      this._timerId = setTimeout(() => {
+        this.debouncedLookUp(val);
+      }, 250);
+    },
+    async debouncedLookUp(val) {
       this.loading = true;
-      this.items = await suggestions(val, this.vocab);
+      const res = await suggestions(val, this.vocab);
+      this.items = this.value;
+      this.items = this.unique(this.items.concat(res));
       this.loading = false;
     }
   }
