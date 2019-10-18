@@ -10,7 +10,7 @@
           <v-row dense>
             <v-col dense>
               <Terms v-model="primary" vocab="primary" label="Primary search terms"/>
-              <Terms v-model="refinment" vocab="refinment" label="Refinment search terms" />
+              <Terms v-model="refinment" vocab="refinment" label="Refinement search terms" />
               <v-btn :disabled="disabled" block color="blue darken-1" light v-on:click="query">Enlighten me!</v-btn>
             </v-col>
           </v-row>
@@ -21,7 +21,7 @@
   <v-row v-if="loaded">
     <v-col>
     <v-card class="mx-auto">
-      <Chart :categories="categories" :counts="counts" :primary="primary" :refinment="refinment" />
+      <Chart :config="chartConfig" />
     </v-card>
     </v-col>
   </v-row>
@@ -46,8 +46,7 @@ export default {
       refinment: [],
       loaded: false,
       loading: false,
-      categories: [],
-      counts: [],
+      chartConfig: null,
       disabled: true,
      }
   },
@@ -74,9 +73,15 @@ export default {
 
       if ('error' in result) {
         this.loaded = false;
+        this.chartConfig = null;
         alert(result.error);
         return;
       }
+      this.chartConfig = {
+        primary: this.primary,
+        refinment: this.refinment,
+        data: result
+      };
       this.categories = result.categories;
       this.counts = result.counts;
       this.loaded = true;

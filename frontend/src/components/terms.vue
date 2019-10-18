@@ -49,19 +49,20 @@ export default {
   },
   methods: {
     unique (a) {
-     return Array.from(new Set(a));
+      return a;
+     //return Array.from(new Set(a));
     },
     lookUp(val) {
       clearTimeout(this.timerId);
       this._timerId = setTimeout(() => {
         this.debouncedLookUp(val);
-      }, 250);
+      }, 500);
     },
     async debouncedLookUp(val) {
       this.loading = true;
       const res = await suggestions(val, this.vocab);
-      this.items = this.value;
-      this.items = this.unique(this.items.concat(res));
+      this.items = res;
+      this.items = this.unique(this.items.concat(this.value));
       this.loading = false;
     }
   }
