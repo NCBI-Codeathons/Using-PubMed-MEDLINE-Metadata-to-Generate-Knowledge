@@ -35,6 +35,7 @@ The beta web app can be found here: http://104.196.160.13/#/
 ## Forthcoming features
 - Support for publication type (PT) search
 - Support PMID list upload instead of search
+- Send user to PubMed to perform a search based on click on bar in output figure
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
