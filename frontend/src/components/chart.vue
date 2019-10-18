@@ -22,16 +22,22 @@ export default {
     }
   },
   methods: {
+    navigate(category) {
+       //window.open('http://stackoverflow.com', '_blank');
+       alert('Category: ' + category + ', value: ' + this.config.data[category].pub_med);
+    },
+    
     build() {
 
-
+      const self = this;
       const counts = [];
       const categories = [];
       for (const [cat, count] of Object.entries(this.config.data)) {
-        counts.push([parseInt(count)]);
+        counts.push([parseInt(count.count)]);
         categories.push([cat]);
       }
 
+      const total = counts.reduce((a, b) => a + parseInt(b), 0);
       return {
         credits: {
           enabled: false // Remove watermark.
@@ -45,7 +51,7 @@ export default {
           spacing: [50, 20, 20, 20]
         },
         title: {
-          text: this.config.primary.join("; ")
+          text: this.config.primary.join("; ") + "<br/><span class='caption'>" + total + " total matches</span>",
         },
         legend:{
           enabled: false
@@ -71,15 +77,14 @@ export default {
               point: {
                   events: {
                       click: function () {
-                          window.open('http://stackoverflow.com', '_blank');
-                          //alert('Category: ' + this.category + ', value: ' + this.y);
+                          self.navigate(this.category)
                       }
                   }
               }
           }
         },
         series: [{
-          name: 'Test',
+          name: 'Counts',
           data: counts,
           animation: false,
           color: '#1E88E5'
