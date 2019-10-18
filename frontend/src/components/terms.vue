@@ -34,7 +34,8 @@ export default {
       loading: false,
       items: this.value,
       select: this.value,
-      search: null
+      search: null,
+      timerId: null,
      }
   },
   watch: {
@@ -50,7 +51,13 @@ export default {
     unique (a) {
      return Array.from(new Set(a));
     },
-    async lookUp(val) {
+    lookUp(val) {
+      clearTimeout(this.timerId);
+      this._timerId = setTimeout(() => {
+        this.debouncedLookUp(val);
+      }, 250);
+    },
+    async debouncedLookUp(val) {
       this.loading = true;
       const res = await suggestions(val, this.vocab);
       this.items = this.value;
