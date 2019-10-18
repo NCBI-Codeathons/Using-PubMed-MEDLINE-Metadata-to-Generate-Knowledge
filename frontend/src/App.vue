@@ -21,7 +21,7 @@
       <v-container>
         <v-row>
           <v-col>
-           <p class="text-left font-weight-light">NLM Internal Codethon</p>
+           <p class="text-left font-weight-light">NLM Internal Codeathon</p>
           </v-col>
           <v-col>
             <p class="text-right font-weight-regular">&copy; Dream Team 2019</p>
