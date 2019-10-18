@@ -24,13 +24,17 @@ def health():
     return "OK"
 
 
-# This is only used when running locally. When running live, gunicorn runs
-# the application.
-if __name__ == '__main__':
-
+@app.before_first_request
+def startup():
+    print ("Starting service!")
     Entrez.email = cfg.MAIL
     Entrez.api_key = cfg.KEY
     Entrez.tool = cfg.TOOL
+    print("Started!")
 
+# This is only used when running locally. When running live, gunicorn runs
+# the application.
+if __name__ == '__main__':
+    
     app.run(host='0.0.0.0', port=os.environ.get(
         'BACKEND_PORT', 5001), debug=True)
