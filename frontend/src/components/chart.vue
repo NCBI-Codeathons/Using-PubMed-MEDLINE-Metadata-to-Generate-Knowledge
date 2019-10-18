@@ -1,5 +1,5 @@
 <template>
-  <Chart :options="options"></chart>
+  <Chart :options="options" />
 </template>
 
 <script>
@@ -13,9 +13,21 @@ export default {
       Chart
   },
   data: function() {
-    const data = this.msg;
     return {
-      options: {
+      options: this.build()
+    }
+  },
+  watch: {
+    categories(val) {
+      this.options = this.build();
+    },
+    counts(val) {
+      this.options = this.build();
+    }
+  },
+  methods: {
+    build() {
+      return {
         credits: {
           enabled: false // Remove watermark.
         },
@@ -53,7 +65,7 @@ export default {
         }]
       }
     }
-  },
+  }
 }
 </script>
 
