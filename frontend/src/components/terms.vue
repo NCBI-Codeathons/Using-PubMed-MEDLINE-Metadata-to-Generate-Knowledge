@@ -5,6 +5,7 @@
      chips
      small-chips
      multiple
+     deletable-chips
      auto-select-first
      v-model="select"
      :loading="loading"
@@ -41,6 +42,7 @@ export default {
     select(val) {
       console.log(this.vocab, "Select!");
       this.$emit('input', val);
+      this.search = "";
     },
     search(val) {
       console.log(this.vocab, "Search!");
