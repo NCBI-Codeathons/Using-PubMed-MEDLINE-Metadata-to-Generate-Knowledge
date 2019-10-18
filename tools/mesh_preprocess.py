@@ -29,6 +29,8 @@ nodeList = [
 # main name, [ synonyms ]
 synonymList = []
 
+scrList = []
+
 
 DECL_PREFIX = "d2020"
 SCR_PREFIX  = "c2020"
@@ -43,6 +45,12 @@ def createNode(heading, nodes, synonyms):
     if len(synonyms) > 0:
         synonymList.append((heading, synonyms))
 
+def createSCRNode(heading, nodes, synonyms):
+#    print(heading + " : " + " ".join(nodes))
+    for node in nodes:
+        nodeList.append((node, heading))
+    scrList.append(heading)
+    for synonym in synonyms: scrList.append(synonym)
 
 def parseDescriptors():
     heading = ""
@@ -80,6 +88,14 @@ def parseDescriptors():
     if heading:
         createNode(heading, nodes, synonyms)
 
+nodeDict = {}
+pathSet = set()
+
+def buildNodeDict():
+    for tree_node, heading in nodeList:
+        nodeDict.setdefault(heading, []).append(tree_node)
+        pathSet.add(tree_node)
+
 def parseSCR():
     heading = ""
     nodes = []
@@ -94,7 +110,7 @@ def parseSCR():
             if not line: continue
             if line == "*NEWRECORD":
                 if heading:
-                    createNode(heading, nodes, synonyms)
+                    createSCRNode(heading, nodes, synonyms)
                     heading = ""
                     nodes = []
                     synonyms = []
@@ -104,10 +120,18 @@ def parseSCR():
             ty, content = mo.groups()
             if ty == "NM":
                 heading = content
-            elif ty == "HM":
-                pass
+            elif False: # disable putting SCR terms in the hierarchy ty == "HM":
+                if len(content) and content[0] == '*':
+                    content = content[1:]
+                tree_paths = nodeDict.get(content, [])
                 # get all node paths for this entry, create our own paths for this node
-                #nodes.append(content)
+                for tree_path in tree_paths:
+                    for i in range(1000):
+                        new_tree_path = tree_path + '.' + str(i)
+                        if not new_tree_path in pathSet:
+                            pathSet.add(new_tree_path)
+                            nodes.append(new_tree_path)
+                            break
             elif ty == "SY":
                 synonym = content
                 try:
@@ -116,7 +140,7 @@ def parseSCR():
                 except ValueError: pass
                 synonyms.append(synonym)
     if heading:
-        createNode(heading, nodes, synonyms)
+        createSCRNode(heading, nodes, synonyms)
 
 def writeFiles():
     with open(OUT_PREFIX+".nodes", "w") as f:
@@ -126,10 +150,14 @@ def writeFiles():
         for name, synonyms in synonymList:
             f.write(name+'\t'+'\t'.join(synonyms)+'\n')
     
+    with open(OUT_PREFIX+".scr", "w") as f:
+        for name in scrList:
+            f.write(name+'\n')
 
 
 def main(argv):
     parseDescriptors()
+#    buildNodeDict()
     parseSCR()
     writeFiles()
 
