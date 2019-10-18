@@ -11,7 +11,6 @@ import os.path
 
 # Return list of pubmed ids for the query
 def getPubMedIds(search_string: str, max_records: int):
-    Entrez.email = "Preeti.Kochar@nih.gov"
     handle = Entrez.esearch(
         db="pubmed",
         term=search_string,
@@ -82,7 +81,6 @@ def getMedLineRecordChunk(pmid_list: List[str], start: int):
     """Return a generator of the 10000 (or fewer) medline records for a
     given list of pubmed ids starting at index start within the entire
     list"""
-    Entrez.email = "Preeti.Kochar@nih.gov"
     return Medline.parse(
         Entrez.efetch(
             db="pubmed",
