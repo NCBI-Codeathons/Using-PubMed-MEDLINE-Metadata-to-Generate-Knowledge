@@ -29,10 +29,10 @@ The beta web app can be found here: http://104.196.160.13/#/
 ## Additional Features
 - The MeSH terms can be found with autocomplete after the user begins to type
 - Support for Entry Terms & SCRs
-- Add search terms to figures
-- Time series analysis
+- Date filtering
 
 ## Forthcoming features
+- Time series analysis
 - Support for publication type (PT) search
 - Support PMID list upload instead of search
 - Send user to PubMed to perform a search based on click on bar in output figure
