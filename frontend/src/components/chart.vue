@@ -28,7 +28,9 @@ export default {
     }
   },
   methods: {
+    
     build() {
+      const total = this.counts.reduce((a, b) => a + parseInt(b), 0);
       return {
         credits: {
           enabled: false // Remove watermark.
@@ -42,7 +44,7 @@ export default {
           spacing: [50, 20, 20, 20]
         },
         title: {
-          text: this.primary.join("; ")
+          text: this.primary.join("; ") + "<br/><span class='caption'>" + total + " total matches</span>",
         },
         legend:{
           enabled: false
