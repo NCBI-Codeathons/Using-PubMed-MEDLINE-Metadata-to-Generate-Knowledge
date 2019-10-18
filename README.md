@@ -21,7 +21,7 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 > A user starts a search using a MeSH term of interest.  A corpus of citations is retrieved.  The number of those citations that intersect (match) the corpus are quantified and displayed in a chart.
 
 ## How to use PM2K
-The beta web app can be found here: http://104.196.160.13/#/
+The beta web app can be found here: http://pubmeta.us/#/
 
 ![alt text](/.images/example.png)
 > This figures illustrates the output for the example proposed above, displaying the regions tagged on the publications that were about Zika Virus.
@@ -29,9 +29,9 @@ The beta web app can be found here: http://104.196.160.13/#/
 ## Additional Features
 - The MeSH terms can be found with autocomplete after the user begins to type
 - Support for Entry Terms & SCRs
-- Date filtering
 
 ## Forthcoming features
+- Date filtering
 - Time series analysis
 - Support for publication type (PT) search
 - Support PMID list upload instead of search
