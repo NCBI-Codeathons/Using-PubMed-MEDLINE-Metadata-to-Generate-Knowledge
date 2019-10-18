@@ -82,6 +82,7 @@ def getMedLineRecordChunk(pmid_list: List[str], start: int):
     """Return a generator of the 10000 (or fewer) medline records for a
     given list of pubmed ids starting at index start within the entire
     list"""
+    Entrez.email = "Preeti.Kochar@nih.gov"
     return Medline.parse(
         Entrez.efetch(
             db="pubmed",
