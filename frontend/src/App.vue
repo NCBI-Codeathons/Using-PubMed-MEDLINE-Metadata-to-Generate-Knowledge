@@ -9,7 +9,7 @@
         </v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text to="/about">
+      <v-btn text href="https://github.com/NCBI-Codeathons/Using-PubMed-MEDLINE-Metadata-to-Generate-Knowledge/blob/master/README.md">
         <span class="mr-2">About</span>
       </v-btn>
     </v-app-bar>
@@ -19,8 +19,14 @@
     </v-content>
     <v-footer elevation="1">
       <v-container>
-        <p class="text-right">NLM Internal Codethon</p>
-        
+        <v-row>
+          <v-col>
+           <p class="text-left font-weight-light">NLM Internal Codethon</p>
+          </v-col>
+          <v-col>
+            <p class="text-right font-weight-regular">&copy; Dream Team 2019</p>
+          </v-col>
+        </v-row>
       </v-container>
     </v-footer>
   </v-app>

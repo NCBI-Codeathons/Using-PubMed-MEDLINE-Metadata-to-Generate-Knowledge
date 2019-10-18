@@ -21,7 +21,7 @@
   <v-row v-if="loaded">
     <v-col>
     <v-card class="mx-auto">
-      <Chart :categories="categories" :counts="counts" />
+      <Chart :categories="categories" :counts="counts" :primary="primary" :refinment="refinment" />
     </v-card>
     </v-col>
   </v-row>

@@ -6,6 +6,8 @@
 import {Chart} from 'highcharts-vue'
 export default {
   props: [
+    'primary',
+    'refinment',
     'categories',
     'counts'
   ],
@@ -39,13 +41,17 @@ export default {
           animation: false,
           spacing: [50, 20, 20, 20]
         },
-        title: null,
+        title: {
+          text: this.primary.join("; ")
+        },
         legend:{
           enabled: false
         },
         xAxis: {
           categories: this.categories,
-          title: null
+          title: {
+            text: this.refinment.join('; ')
+          }
         },
         yAxis: {
             min: 0,
