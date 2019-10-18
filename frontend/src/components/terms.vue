@@ -1,13 +1,13 @@
 <template>
     <v-autocomplete
+     outlined
      dense
      chips
      multiple
      deletable-chips
      auto-select-first
      v-model="select"
-     outlined
-     :label=label
+     :label="label"
      :loading="loading"
      :items="items"
      :search-input.sync="search"/>
@@ -27,7 +27,7 @@ export default {
   async created() {
     const res = await suggestions("", this.vocab);
     this.items = this.value;
-    this.items = this.items.concat(res);
+    this.items = this.unique(this.items.concat(res));
   },
   data: function() {
      return {
@@ -47,11 +47,14 @@ export default {
     }
   },
   methods: {
+    unique (a) {
+     return Array.from(new Set(a));
+    },
     async lookUp(val) {
       this.loading = true;
       const res = await suggestions(val, this.vocab);
       this.items = this.value;
-      this.items = this.items.concat(res);
+      this.items = this.unique(this.items.concat(res));
       this.loading = false;
     }
   }
