@@ -24,6 +24,7 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 The beta web app can be found here: http://104.196.160.13/#/
 
 ![alt text](/.images/example.png)
+> This figures illustrates the output for the example proposed above, displaying the regions tagged on the publications that were about Zika Virus.
 
 ## Additional Features
 - The MeSH terms can be found with autocomplete after the user begins to type
