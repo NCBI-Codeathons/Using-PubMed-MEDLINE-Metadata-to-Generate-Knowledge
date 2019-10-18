@@ -23,7 +23,7 @@ From the National Library of Medicine website: "The Medical Subject Headings (Me
 ## How to use PM2K
 The beta web app can be found here: http://104.196.160.13/#/
 
-![alt text](/.images/output.png)
+![alt text](/.images/example.png)
 
 ## Additional Features
 - The MeSH terms can be found with autocomplete after the user begins to type
@@ -31,6 +31,7 @@ The beta web app can be found here: http://104.196.160.13/#/
 ## Forthcoming features
 - Support for Entry Terms & SCRs
 - Add search terms to figures
+- Support for publication type (PT) search
 - Support PMID list upload instead of search
 - Time series analysis
 
