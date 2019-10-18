@@ -39,7 +39,45 @@ The beta web app can be found here: http://104.196.160.13/#/
 
 ## Team
 - Kurtis Haro, PhD NLM/NCBI
-- Eric Moyer, PhD NLM/NCBI
+- Eric Moyer, NLM/NCBI
 - Evgeny Ivanchenko, PhD NLM/NCBI
 - Victor Joukov, NLM/NCBI
 - Preeti G. Kochar, PhD NLM/LO/BSD
+
+## Architecture
+    +---------+
+    |         |
+    | Browser |
+    |         |
+    +----+----+
+         |
+         |
+         |
+         v
+    +----+-----+
+    |          |
+    |   Vue    |
+    |          |
+    | Frontend |
+    |          |
+    +----+-----+
+         |
+         |
+         v
+    +----+----+      +----------+
+    |         |      |          |
+    |  Flask  |      |  Entrez  |
+    |         +----->+          |
+    | Backend |      |  EUtils  |
+    |         |      |          |
+    +---+-----+      +----------+
+        |
+        v
+    +---+----------+
+    |              |
+    | Preprocessed |
+    | MeSH         |
+    | Datafiles    |
+    |              |
+    |              |
+    +--------------+
