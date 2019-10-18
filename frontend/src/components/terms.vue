@@ -2,7 +2,6 @@
     <v-autocomplete
      dense
      chips
-     
      multiple
      deletable-chips
      auto-select-first
@@ -26,7 +25,6 @@ export default {
     label: String
   },
   async created() {
-    console.log(this.vocab, "Created!", this.value);
     const res = await suggestions("", this.vocab);
     this.items = this.value;
     this.items = this.items.concat(res);
@@ -41,12 +39,10 @@ export default {
   },
   watch: {
     select(val) {
-      console.log(this.vocab, "Select!");
       this.$emit('input', val);
       this.search = "";
     },
     search(val) {
-      console.log(this.vocab, "Search!");
       val && val != this.select && this.lookUp(val)
     }
   },
@@ -57,7 +53,6 @@ export default {
       this.items = this.value;
       this.items = this.items.concat(res);
       this.loading = false;
-      console.log(this.vocab, "Lookup end!");
     }
   }
 }
