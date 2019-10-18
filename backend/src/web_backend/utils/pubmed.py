@@ -1,9 +1,9 @@
 from Bio import Entrez
 from Bio import Medline
 from collections import Counter
-from itertools import islice
+from itertools import chain, islice
 from pathlib import Path
-from typing import Callable, Dict, Iterable, List, Optional, Set
+from typing import Callable, Dict, IO, Iterable, List, Optional, Set
 import attr
 import datetime
 import os.path
@@ -159,17 +159,34 @@ PRIMARY = 'primary'
 SECONDARY = 'secondary'
 
 
+def after_1st_tab_no_ws(s: str) -> str:
+    return s.partition('\t')[2].rstrip()
+
+
+def headingsFileTerms(f: IO[str]) -> Iterable[str]:
+    '''Return terms from an open headings file'''
+    return map(after_1st_tab_no_ws, f)
+
+
+def synonymsFileTerms(f: IO[str]) -> Iterable[str]:
+    '''Return terms from an open synonyms file'''
+    def split_synonyms(s: str) -> Iterable[str]:
+        return map(lambda x: x.rstrip(), s.split('\t'))
+    return chain.from_iterable(
+        map(split_synonyms, map(after_1st_tab_no_ws, f)))
+
+
 def loadVocabulary(vocab_name: str) -> AutocompleteVocabulary:
     """Load either PRIMARY or SECONDARY vocabulary into an
     AutocompleteVocabulary"""
 
-    def after_tab_no_ws(s: str) -> str:
-        return s.partition('\t')[2].rstrip()
-
     base_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
-    fn = "d2020.nodes" if vocab_name == PRIMARY else "d2020.nodes"
-    path = base_dir / fn
-    with open(path) as f:
-        terms = map(after_tab_no_ws, f)
-        return AutocompleteVocabulary(terms)
+    with open(base_dir / "d2020.nodes") as f:
+        vocab = AutocompleteVocabulary(headingsFileTerms(f))
+
+    if vocab_name == PRIMARY:
+        with open(base_dir / "d2020.synonyms") as f:
+            vocab.add_all(synonymsFileTerms(f))
+
+    return vocab
