@@ -23,8 +23,7 @@ export default {
   },
   methods: {
     navigate(category) {
-       //window.open('http://stackoverflow.com', '_blank');
-       alert('Category: ' + category + ', value: ' + this.config.data[category].pub_med);
+       window.open(this.config.data[category].pub_med, '_blank');
     },
     
     build() {
