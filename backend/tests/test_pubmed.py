@@ -150,3 +150,16 @@ class TestAutocompleteVocabulary(unittest.TestCase):
         t = list(pubmed.synonymsFileTerms(StringIO(
             "123.45\tA syn\n67\tOther\tfoo")))
         self.assertEqual(t, ['A syn', 'Other', 'foo'])
+
+    def test_scrFileTerms_empty(self):
+        t = list(pubmed.scrFileTerms(StringIO("")))
+        self.assertEqual(t, [])
+
+    def test_scrFileTerms_one(self):
+        t = list(pubmed.scrFileTerms(StringIO("A term")))
+        self.assertEqual(t, ['A term'])
+
+    def test_scrFileTerms_two(self):
+        t = list(pubmed.scrFileTerms(StringIO(
+            "A term\nOther")))
+        self.assertEqual(t, ['A term', 'Other'])
