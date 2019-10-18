@@ -136,17 +136,29 @@ class AutocompleteVocabulary:
 
     def autocomplete(self, text: str) -> List[str]:
         """Return the list of matches within this vocabulary"""
-        def matches(p: str) -> Callable[[str], bool]:
+        def matcher(p: str,
+                    predicate: Callable[[str, str], bool]) -> Callable[
+                        [str], bool]:
+            '''Return a matcher that returns true if predicate is true
+            on p and lower_case of its other agument'''
             p_lower = p.lower()
 
             def m(term: str) -> bool:
-                return p_lower in term.lower()
-
+                return predicate(p_lower, term.lower())
             return m
 
+        def matches(p: str) -> Callable[[str], bool]:
+            return matcher(p, lambda a, b: a in b)
+
+        def exact_matches(p: str) -> Callable[[str], bool]:
+            return matcher(p, lambda a, b: a == b)
+
         return list(
-            islice(filter(matches(text), self._terms),
-                   MAX_AUTOCOMPLETIONS))
+            islice(
+                chain(
+                    filter(exact_matches(text), self._terms),
+                    filter(matches(text), self._terms)),
+                MAX_AUTOCOMPLETIONS))
 
     def add_all(self, terms: Iterable[str]) -> None:
         self._terms.extend(set(terms))

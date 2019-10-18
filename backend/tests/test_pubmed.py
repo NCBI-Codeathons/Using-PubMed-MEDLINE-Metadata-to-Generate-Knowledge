@@ -62,12 +62,20 @@ class TestAutocompleteVocabulary(unittest.TestCase):
         a = pubmed.AutocompleteVocabulary(map(str, range(25)))
         self.assertEqual(
             set(a.autocomplete("")),
-            { '0', '1', '10', '11', '12', '13', '14', '15', '16', '17',
-              '18', '19', '20', '21', '22', '23', '24', '2', '3', '4'
+            {
+                '0', '1', '10', '11', '12', '13', '14', '15', '16', '17',
+                '18', '19', '20', '21', '22', '23', '24', '2', '3', '4'
             })
         self.assertEqual(
             set(a.autocomplete("1")),
-            {'1','10','11','12','13','14','15','16','17','18','19','21'})
+            {'1', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
+             '21'})
+
+    def test_exact_match_first(self):
+        a = pubmed.AutocompleteVocabulary(map(str, range(1000)))
+        self.assertEqual(a.autocomplete("2")[0], "2")
+        self.assertEqual(a.autocomplete("5")[0], "5")
+        self.assertEqual(a.autocomplete("25")[0], "25")
 
     def test_loadVocabulary_primary(self):
         a = pubmed.loadVocabulary(pubmed.PRIMARY)
@@ -79,7 +87,6 @@ class TestAutocompleteVocabulary(unittest.TestCase):
             "Marfanil"
         })
 
-
     def test_headingsFileTerms_empty(self):
         t = list(pubmed.headingsFileTerms(StringIO("")))
         self.assertEqual(t, [])
@@ -89,7 +96,8 @@ class TestAutocompleteVocabulary(unittest.TestCase):
         self.assertEqual(t, ['A term'])
 
     def test_headingsFileTerms_two(self):
-        t = list(pubmed.headingsFileTerms(StringIO("123.45\tA term\n67\tOther")))
+        t = list(pubmed.headingsFileTerms(StringIO(
+            "123.45\tA term\n67\tOther")))
         self.assertEqual(t, ['A term', 'Other'])
 
     def test_synonymsFileTerms_empty(self):
