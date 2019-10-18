@@ -9,7 +9,7 @@ descendantDict = {}
 nodesDict = {}
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
-DECL_PREFIX = base_dir + "/d2020"
+DECL_PREFIX = base_dir + "/mesh2020"
 
 def getDescendants(term: str, level, cumulative=True):
     all_descendants = []
@@ -50,21 +50,20 @@ def readNodesDict():
             parts = line.split('\t')
             nodesDict[parts[0]] = parts[1]
 
-def createDescendantDict(cache_nodes=False):
-    if cache_nodes:
-        f = open(DECL_PREFIX+".nodes", "w")
+def createDescendantDict():
     for tree_node, heading in nodesDict.items():
-        if cache_nodes:
-            f.write(tree_node+'\t'+heading+'\n')
+        parent_node = None
         try:
             ri = tree_node.rindex('.')
+            # Dot separated path, tree node in a form A01.236.249, parent - A01.236
             parent_node = tree_node[:ri]
+        except ValueError:
+            # Second level category, tree_node in a form A01, parent - A
+            if len(tree_node) > 1:
+                parent_node = tree_node[0]
+        if parent_node:
             parent_header = nodesDict[parent_node]
             descendantDict.setdefault(parent_header, []).append(heading)
-        except ValueError:
-            pass
-    if cache_nodes:
-        f.close()
     
 readNodesDict()
 createDescendantDict()
