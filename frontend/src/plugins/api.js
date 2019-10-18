@@ -11,16 +11,8 @@ export async function search(first_list, second_list) {
       
       const result = await axios.post("/api/query", params);
 
-      const categories = [];
-      const counts = [];
-
-      for (const [cat, count] of Object.entries(result.data)) {
-        counts.push([count]);
-        categories.push([cat]);
-      }
-
       //console.log(categories, counts);
-      return {categories: categories, counts: counts};
+      return result.data;
     } catch (err) {
       return {error: "something went wrong", details: JSON.stringify(err)}
     }

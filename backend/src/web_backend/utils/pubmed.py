@@ -3,7 +3,8 @@ from Bio import Medline
 from collections import Counter
 from itertools import chain, islice
 from pathlib import Path
-from typing import Callable, Dict, IO, Iterable, List, Optional, Set
+from typing import Callable, Dict, IO, Iterable, List, Optional, Set, Union
+from urllib.parse import urlencode
 import attr
 import datetime
 import os.path
@@ -126,6 +127,33 @@ def countGroupedIds(
     return counts
 
 
+def pubmedUrl(first_mesh_terms: List[str],
+              second_mesh_terms: List[str],
+              first_pub_date: Optional[datetime.date],
+              last_pub_date: Optional[datetime.date]) -> str:
+    s = {"term": searchQueryStringForMeshTermIntersection(
+        first_mesh_terms, second_mesh_terms, first_pub_date, last_pub_date)}
+    return f"https://www.ncbi.nlm.nih.gov/pubmed/?{urlencode(s)}"
+
+
+def addPubMedSearchUrls(first_mesh_terms: List[str],
+                        group_counts: Dict[str, int],
+                        first_pub_date: Optional[datetime.date],
+                        last_pub_date: Optional[datetime.date]) \
+                        -> Dict[str, Dict[str, Union[int, str]]]:
+    '''Takes a dictionary like {"mesh term": 999} and turns it into a
+    dictionary like:
+
+    {"mesh term": {"pub_med": "https://pub.med/query_url, "count": 999}}
+    '''
+    return {
+        term: {
+            "count": count,
+            "pub_med": pubmedUrl(first_mesh_terms, [term],
+                                 first_pub_date, last_pub_date)
+        } for term, count in group_counts.items()}
+
+
 MAX_AUTOCOMPLETIONS = 20
 
 
@@ -139,6 +167,7 @@ class AutocompleteVocabulary:
         def matcher(p: str,
                     predicate: Callable[[str, str], bool]) -> Callable[
                         [str], bool]:
+
             '''Return a matcher that returns true if predicate is true
             on p and lower_case of its other agument'''
             p_lower = p.lower()
