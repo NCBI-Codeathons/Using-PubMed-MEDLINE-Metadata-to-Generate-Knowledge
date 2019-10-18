@@ -4,7 +4,7 @@ from web_backend.utils.mesh import descendantsAndBucketsForTerms
 
 from web_backend.utils.pubmed import getPubMedIdsForMesh, addMeshTermsToIds, \
     countGroupedIds, loadVocabulary, PRIMARY, \
-    SECONDARY
+    SECONDARY, addPubMedSearchUrls
 
 
 api = Blueprint(
@@ -28,9 +28,12 @@ def query():
     mesh_ids = addMeshTermsToIds(pubmed_ids)
 
     term_to_group = descendantsAndBucketsForTerms(second_mesh_terms)
-    #print(term_to_group)
-    result = countGroupedIds(term_to_group, mesh_ids)
-    #print(result)
+    # print(term_to_group)
+    group_counts = countGroupedIds(term_to_group, mesh_ids)
+    result = addPubMedSearchUrls(
+        first_mesh_terms, group_counts,
+        first_pub_date=None, last_pub_date=None)
+    # print(result)
     return jsonify(result)
 
 
