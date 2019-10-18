@@ -2,7 +2,7 @@
 
 cd $(dirname "$0")
 
-source ./access.sh
+source ./access.env
 
 cd ../
 
@@ -19,4 +19,4 @@ ssh -i $KEY $SERVER 'tar -zxvf dist.tar.gz'
 ssh -i $KEY $SERVER "cd /home/$USER/dist && docker build ./ --tag 'pubmed:0.1'"
 
 
-ssh -i $KEY $SERVER 'docker run -dit --rm --name pubmed -p 80:8080 pubmed:0.1'
+ssh -i $KEY $SERVER 'docker run -d --rm --name pubmed -p 80:8080 pubmed:0.1'
