@@ -107,18 +107,17 @@ class TestAutocompleteVocabulary(unittest.TestCase):
             'Marfanoid craniosynostosis syndrome',
             'Marfanoid Disorder With Craniosynostosis, Type I',
             'Marfan like connective tissue disorder',
-            'fibrillin 1 (Marfan syndrome) protein, human',
-            'XLMR with Marfanoid Features',
-            'Neonatal Cutis Laxa With Marfanoid Phenotype',
             'Marfanoid disorder with craniosynostosis, type 2',
             'Marfan syndrome type 1',
-            'X-Linked Mental Retardation with Marfanoid Habitus',
             'Marfanoid habitus, mild general hypotonia, hypernasal voice, '
             'normal testicular size, and distinct craniofacial anomalies',
-            'Mental retardation, X-linked, with marfanoid habitus',
-            'X-Linked Intellectual Deficit with Marfanoid Habitus',
-            'Craniosynostosis and Marfanoid disorder, type 1'
-        })
+            'Craniosynostosis and Marfanoid disorder, type 1',
+            'Marfanoid hypermobility syndrome',
+            'Marfan Syndrome type 2',
+            'Marfanoid Habitus with Situs Inversus',
+            'Marfanoid Habitus with Microcephaly and Glomerulonephritis',
+            'Cutis Laxa-Marfanoid Syndrome',
+            'Marfanoid Mental Retardation Syndrome, Autosomal'})
 
     def test_headingsFileTerms_empty(self):
         t = list(pubmed.headingsFileTerms(StringIO("")))
