@@ -1,47 +1,35 @@
 <template>
 <v-container>
-  <v-overlay v-if="loading" opacity="0.5" color="white">
-      <v-progress-circular :size="150" color="primary" indeterminate />
+  <v-overlay v-if="loading" opacity="0.8" color="white">
+      <v-progress-circular :size="150" color="blue darken-1" indeterminate />
   </v-overlay>
   <v-row>
     <v-col>
       <v-card class="mx-auto">
-     <v-simple-table>
-        <tbody>
-          <tr>
-            <td class="head">Primary search terms</td>
-            <td><Terms v-model="primary" vocab="primary" /></td>
-          </tr>
-          <tr>
-            <td class="head">Refinment search terms</td>
-            <td><Terms v-model="refinment" vocab="refinment" /></td>
-          </tr>
-        </tbody>
-      </v-simple-table>
+        <v-container>
+          <v-row dense>
+            <v-col dense>
+              <Terms v-model="primary" vocab="primary" label="Primary search terms"/>
+              <Terms v-model="refinment" vocab="refinment" label="Refinment search terms" />
+              <v-btn :disabled="disabled" block color="blue darken-1" light v-on:click="query">Enlighten me!</v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </v-col>
   </v-row>
-  <v-row>
-    <v-col>
-      <v-card class="mx-auto">
-            <v-card-actions>
-              <v-btn :disabled="disabled" block color="blue darken-1" light v-on:click="query">Enlight me!</v-btn>
-            </v-card-actions>
-          </v-card>
-    </v-col>
-  </v-row>
   <v-row v-if="loaded">
+    <v-col>
     <v-card class="mx-auto">
       <Chart :categories="categories" :counts="counts" />
     </v-card>
+    </v-col>
   </v-row>
 </v-container>
 </template>
 
 <script>
-// Search
 
-// Split categories
 import Chart from '@/components/chart'
 import Terms from '@/components/terms'
 import {search} from '@/plugins/api'

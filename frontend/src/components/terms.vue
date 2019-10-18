@@ -1,17 +1,17 @@
 <template>
-  <v-row>
     <v-autocomplete
      dense
      chips
-     small-chips
+     
      multiple
      deletable-chips
      auto-select-first
      v-model="select"
+     outlined
+     :label=label
      :loading="loading"
      :items="items"
      :search-input.sync="search"/>
-  </v-row>
 </template>
 
 <script>
@@ -22,7 +22,8 @@ export default {
   },
   props: {
     value: Array,
-    vocab: String
+    vocab: String,
+    label: String
   },
   async created() {
     console.log(this.vocab, "Created!", this.value);
