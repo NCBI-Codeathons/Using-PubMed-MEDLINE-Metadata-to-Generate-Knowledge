@@ -27,6 +27,8 @@ echo "Create dist"
     cp ./backend/dist/web_backend-0.0.tar.gz ./dist
     cp ./build/keys.env ./dist
     cp ./build/run_server.sh ./dist
+    cp -r ./backend/src/web_backend/front ./dist/front
+    cp ./build/nginx.conf ./dist/
 )
 
 echo "Deploy..."

@@ -23,6 +23,11 @@ Linux VPS with installed docker.
    export IP=<vps ip>
    export KEY=<path to ssh private key file for user>
     ```
+
+### HTTPS
+
+Current version also requires letsencript certificates issued by `certbot-auto` for https support.
+See deploy.sh and nginx.conf for details of ussage.
   
 ## Build and deploy
 
