@@ -1,4 +1,7 @@
 # PubMed2Knowledge - Exploratory data analysis for PubMed Using MeSH
+## Archived
+We haven't been updating this, so rather than see a flood of security notices, we have archived the repository. May it still be of value to the community in the future.
+
 ## What does PubMed2Knowledge Do?
 PubMed2Knowledge (PM2K) is a tool that allows users to explore relationships between two topics of interest by leveraging PubMed citations indexed with MeSH terms.  The user can quickly learn how two topics (MeSH terms) are related across the PubMed citation corpus.
 For example, suppose I wanted to know "the where" of publications about Zika virus.  In such a query, I may choose to begin my analysis by selecting one or more of the relevant MeSH terms, in this case, "Zika Virus" and "Zika Virus Infection", to create my records of interest.  Since I would like to know about geographic information among these publications, I may decide to enter "Geographic Locations" as my second input parameter.  The tool would analyze the data by quantifying the citations across the first child nodes of "Geographic Locations", which can be explored using the [Mesh Browser](https://meshb.nlm.nih.gov/search) (for this particular term, the children can be seen [here](https://meshb.nlm.nih.gov/record/ui?ui=D005842)
